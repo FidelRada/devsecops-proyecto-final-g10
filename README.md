@@ -155,6 +155,8 @@ tar xzf actions-runner-linux-x64-2.337.0.tar.gz
 ./run.sh   # solo mientras se ejecuta el pipeline; detenerlo al terminar
 ```
 
+Si la ruta del runner tiene espacios, la carpeta de trabajo (`workFolder` en `.runner`, o `--work` en `config.sh`) debe estar en una ruta **sin espacios**, por ejemplo `/home/<usuario>/g10-runner-work`: el runner pasa a `bash` la ruta del script del step sin comillas y un espacio la corta.
+
 Seguridad del runner (el repositorio es público):
 
 - el repositorio exige aprobación para los workflows de **todos** los colaboradores externos y nunca se aprueba un run de un fork;
