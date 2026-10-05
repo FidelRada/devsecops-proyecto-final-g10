@@ -1,0 +1,2730 @@
+{
+  "version": "2.3.0",
+  "summary": {
+    "title": "Grupo 10 – Caso 5: Aplicación Bancaria Móvil",
+    "owner": "Grupo 10 – Seguridad en DevOps (DevSecOps), UAGRM",
+    "description": "Modelo de amenazas STRIDE de una aplicación bancaria móvil: login, consulta de saldo y transferencias. Flujo: Cliente (App) → Servidor API → Core Bancario → Base de Datos.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Bautista Condori Anderzon"
+      },
+      {
+        "name": "Grichukin Méndez Richard"
+      },
+      {
+        "name": "Rada Rojas Andrés Fidel"
+      },
+      {
+        "name": "Vargas Ríos Bebi"
+      }
+    ],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "DFD – Aplicación Bancaria Móvil",
+        "diagramType": "STRIDE",
+        "placeholder": "",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.3.0",
+        "description": "Diagrama de flujo de datos con límites de confianza: dispositivo, DMZ y red interna.",
+        "cells": [
+          {
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 420,
+              "height": 50
+            },
+            "attrs": {
+              "text": {
+                "text": "Grupo 10 – Caso 5: Aplicación Bancaria Móvil\nDFD con límites de confianza (STRIDE)"
+              }
+            },
+            "visible": true,
+            "shape": "td-text-block",
+            "zIndex": 20,
+            "id": "aea1c05b-f185-569e-a7c2-e7425aeb06fb",
+            "data": {
+              "type": "tm.Text",
+              "name": "Grupo 10 – Caso 5: Aplicación Bancaria Móvil",
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 200,
+              "y": 130
+            },
+            "size": {
+              "width": 250,
+              "height": 420
+            },
+            "attrs": {
+              "label": {
+                "text": "Dispositivo del cliente"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": -1,
+            "id": "994bfe87-c9ff-592e-8eb2-68cef9799723",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Dispositivo del cliente",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 590,
+              "y": 140
+            },
+            "size": {
+              "width": 210,
+              "height": 210
+            },
+            "attrs": {
+              "label": {
+                "text": "DMZ"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": -1,
+            "id": "ab68da43-3132-589c-bb50-3ac434b09cea",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "DMZ",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 900,
+              "y": 60
+            },
+            "size": {
+              "width": 480,
+              "height": 500
+            },
+            "attrs": {
+              "label": {
+                "text": "Red interna del banco"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": -1,
+            "id": "c975c127-aefe-51c8-90ba-802cf5feef70",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Red interna del banco",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 10,
+              "y": 250
+            },
+            "size": {
+              "width": 150,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "Cliente"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 2,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "7245f0aa-a28c-52b8-8e6c-9002387b8183"
+                },
+                {
+                  "group": "right",
+                  "id": "bf057dd9-356b-556e-91c7-20071023f322"
+                },
+                {
+                  "group": "bottom",
+                  "id": "7562c73d-f805-5ec2-9a0b-6fc4b9c791be"
+                },
+                {
+                  "group": "left",
+                  "id": "8ef30a9e-d910-57eb-8149-781995967b32"
+                }
+              ]
+            },
+            "id": "246b8fd0-3edf-57a8-8766-9734ef51035e",
+            "data": {
+              "name": "Cliente",
+              "description": "Titular de la cuenta que usa la app desde su teléfono.",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T01 – Robo de credenciales por phishing o app falsa",
+                  "type": "Spoofing",
+                  "description": "Un atacante envía un SMS/correo con un enlace a una app o sitio clonado y obtiene usuario, PIN y OTP del cliente.",
+                  "mitigation": "Autenticación resistente a phishing (FIDO2/passkeys o clave ligada al dispositivo); App Links verificados; monitoreo de apps clonadas en tiendas; campañas de concientización.\n\nReferencia: NIST SP 800-63B; MASVS-AUTH",
+                  "modelType": "STRIDE",
+                  "id": "6660face-c096-5112-b554-543a69fde65e"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T02 – Toma de cuenta por SIM swapping",
+                  "type": "Spoofing",
+                  "description": "El atacante duplica el chip del cliente en la operadora y recibe los OTP por SMS para activar la app en otro dispositivo.",
+                  "mitigation": "Vinculación de dispositivo con clave criptográfica; consulta de cambio reciente de SIM a la operadora; periodo de espera y notificación al activar un nuevo dispositivo.\n\nReferencia: NIST SP 800-63B §5.1.3.3",
+                  "modelType": "STRIDE",
+                  "id": "729b0940-9c89-539b-8020-e8edbbc82cd9"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T03 – Cliente niega haber ordenado una transferencia",
+                  "type": "Repudiation",
+                  "description": "Sin evidencia sólida, el cliente puede disputar una transferencia legítima (o una fraudulenta no puede demostrarse).",
+                  "mitigation": "Firma de cada transacción con la clave privada del dispositivo tras biometría local; registro de la evidencia (dispositivo, IP, hora, firma) en logs inmutables.\n\nReferencia: PSD2 RTS (SCA, dynamic linking)",
+                  "modelType": "STRIDE",
+                  "id": "3509093e-2b57-508e-b3a2-e6b39fa0ff2b"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Actor",
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 620,
+              "y": 30
+            },
+            "size": {
+              "width": 150,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "Proveedor SMS / Push"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 3,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "49c851cf-f9fb-52c4-a19b-7410c6159643"
+                },
+                {
+                  "group": "right",
+                  "id": "f9d9575d-e3ce-575d-8975-8c00685b0440"
+                },
+                {
+                  "group": "bottom",
+                  "id": "314aac1a-9f12-5cba-9803-367112455a44"
+                },
+                {
+                  "group": "left",
+                  "id": "ad6f78df-60e2-50f9-8c2d-0da6e4f12f74"
+                }
+              ]
+            },
+            "id": "b7574bf6-1e40-5ade-b65b-675bb26e1c45",
+            "data": {
+              "name": "Proveedor SMS / Push",
+              "description": "Servicio externo que entrega el código OTP o la notificación push al cliente.",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Low",
+                  "title": "T20 – Suplantación del proveedor de SMS / Push",
+                  "type": "Spoofing",
+                  "description": "Webhooks de confirmación falsos o credenciales robadas del proveedor permiten enviar mensajes fraudulentos.",
+                  "mitigation": "Autenticación mutua (mTLS / API keys rotadas) y verificación de firma en webhooks; mínimo privilegio en la cuenta del proveedor.\n\nReferencia: OWASP ASVS V13",
+                  "modelType": "STRIDE",
+                  "id": "b71630a7-1764-5b40-9ad6-8415d54f7815"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Actor",
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 1440,
+              "y": 600
+            },
+            "size": {
+              "width": 150,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "Red interbancaria\n(ACH)"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 4,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "b1729d32-9076-506f-96b7-ac2bfa4836f5"
+                },
+                {
+                  "group": "right",
+                  "id": "dafe4da4-5eb7-5eb1-be33-c35a5385ed02"
+                },
+                {
+                  "group": "bottom",
+                  "id": "8cb05b26-8a64-5389-9b67-f1b0dad1fda5"
+                },
+                {
+                  "group": "left",
+                  "id": "11fae6cd-fd63-5ab9-85a8-05b70b6397e9"
+                }
+              ]
+            },
+            "id": "1ffd85bf-17c5-5c83-9da2-411989aa1548",
+            "data": {
+              "name": "Red interbancaria\n(ACH)",
+              "description": "Cámara de compensación que procesa transferencias hacia otros bancos.",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T34 – Red interbancaria niega haber recibido una orden",
+                  "type": "Repudiation",
+                  "description": "Ante una transferencia interbancaria fallida o disputada, la cámara o el banco destino niega haber recibido la orden y no hay prueba de envío.",
+                  "mitigation": "Acuses de recibo firmados por la cámara; registro del mensaje enviado y del acuse en logs inmutables; conciliación diaria con la red interbancaria.\n\nReferencia: ISO 20022; PCI DSS 10",
+                  "modelType": "STRIDE",
+                  "id": "62fb6de6-45b6-5fb8-b381-bdec3b137f73"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Actor",
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 250,
+              "y": 170
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "App Móvil\nBancaria"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "35e73bed-dd78-523b-b7d3-211c26682c32"
+                },
+                {
+                  "group": "right",
+                  "id": "0b99865f-5cd4-565c-8742-83eb54d95aa1"
+                },
+                {
+                  "group": "bottom",
+                  "id": "19374108-92e7-5106-9ef4-34124e377b6a"
+                },
+                {
+                  "group": "left",
+                  "id": "8017fb0b-c1ee-535b-9c39-3c3b670ce44a"
+                }
+              ]
+            },
+            "id": "8097fcf5-1aa5-5da3-bb3d-8dbc1524a5fb",
+            "data": {
+              "name": "App Móvil\nBancaria",
+              "description": "Aplicación Android/iOS: login, consulta de saldo y transferencias.",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T04 – App modificada o instrumentada (Frida, reempaquetado)",
+                  "type": "Tampering",
+                  "description": "En un teléfono con root/jailbreak el atacante modifica la app para saltar controles o capturar datos.",
+                  "mitigation": "Detección de root/jailbreak y hooking (RASP); atestación con Play Integrity / App Attest verificada en el servidor; ofuscación de código.\n\nReferencia: MASVS-RESILIENCE",
+                  "modelType": "STRIDE",
+                  "id": "d1c8a533-743b-59ac-9bed-407b5dcb662d"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T05 – Datos sensibles en capturas, caché o logs del teléfono",
+                  "type": "Information disclosure",
+                  "description": "Saldos, números de cuenta o tokens quedan en capturas de pantalla, portapapeles, caché o logcat.",
+                  "mitigation": "FLAG_SECURE / ocultar vista en segundo plano; no registrar datos sensibles; limpiar caché al cerrar sesión; deshabilitar copiado de campos sensibles.\n\nReferencia: MASVS-STORAGE; MASVS-PLATFORM",
+                  "modelType": "STRIDE",
+                  "id": "8b3da4cf-e343-5fc4-8c33-9aaf3ff6ef45"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T06 – Controles de autorización implementados solo en la app",
+                  "type": "Elevation of privilege",
+                  "description": "Límites de monto o funciones ocultas en la interfaz se evitan llamando directamente a la API.",
+                  "mitigation": "Toda regla de negocio y autorización se valida en el servidor; la app solo presenta la información.\n\nReferencia: OWASP API Security Top 10 (API5)",
+                  "modelType": "STRIDE",
+                  "id": "00b1203d-d3c1-5c22-b6a8-0690f197573d"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Process",
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": ""
+            }
+          },
+          {
+            "position": {
+              "x": 640,
+              "y": 190
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "API Gateway /\nServidor API"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 6,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "aa6150ee-7bfe-5eb2-b89c-2a713d9066d0"
+                },
+                {
+                  "group": "right",
+                  "id": "a7aece3d-bc60-53cd-9ed1-2e3b1da657ff"
+                },
+                {
+                  "group": "bottom",
+                  "id": "16f4c7a7-6928-5000-8db3-e2032db9c8bb"
+                },
+                {
+                  "group": "left",
+                  "id": "98aa4854-8736-5159-abf4-8270bf8fbf58"
+                }
+              ]
+            },
+            "id": "769c9677-7038-57a4-a5ad-125d7642f00d",
+            "data": {
+              "name": "API Gateway /\nServidor API",
+              "description": "Punto de entrada público: TLS, autenticación de tokens, rate limiting, enrutamiento.",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T12 – Tokens JWT falsificados o manipulados",
+                  "type": "Spoofing",
+                  "description": "El atacante altera un JWT (alg=none, clave débil, cambio de 'sub') para hacerse pasar por otro cliente.",
+                  "mitigation": "Validar firma con algoritmos permitidos (RS256/ES256), 'iss', 'aud' y 'exp'; rotación de claves (JWKS); tokens de vida corta.\n\nReferencia: RFC 8725 (JWT BCP)",
+                  "modelType": "STRIDE",
+                  "id": "41f753f7-2398-5ef0-aa34-162a27fd3302"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T13 – Fuerza bruta, credential stuffing y DDoS",
+                  "type": "Denial of service",
+                  "description": "Bots prueban miles de combinaciones de usuario/PIN o saturan la API para dejar sin servicio a los clientes.",
+                  "mitigation": "Rate limiting por IP, usuario y dispositivo; bloqueo progresivo; WAF y protección anti-DDoS; atestación de la app para distinguir bots.\n\nReferencia: OWASP API Security Top 10 (API4)",
+                  "modelType": "STRIDE",
+                  "id": "8088b07a-1a39-5d29-9529-3443e0d2951c"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T14 – Acceso a cuentas de otros clientes (BOLA/IDOR)",
+                  "type": "Elevation of privilege",
+                  "description": "Cambiando el número de cuenta en la solicitud, un cliente autenticado consulta saldos o mueve fondos de otra cuenta.",
+                  "mitigation": "Autorización a nivel de objeto en cada endpoint: la cuenta debe pertenecer al 'sub' del token; pruebas automáticas de autorización.\n\nReferencia: OWASP API Security Top 10 (API1)",
+                  "modelType": "STRIDE",
+                  "id": "cdc759ec-88c1-5f87-b5e1-8572cc85369b"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T15 – Mensajes de error detallados",
+                  "type": "Information disclosure",
+                  "description": "Trazas de pila o mensajes de error revelan versiones, consultas SQL o estructura interna.",
+                  "mitigation": "Mensajes genéricos al cliente con un identificador de correlación; detalle solo en logs internos.\n\nReferencia: OWASP Top 10:2025 A10",
+                  "modelType": "STRIDE",
+                  "id": "ea72acd2-7c32-5220-b971-cba57f3a7504"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Process",
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": ""
+            }
+          },
+          {
+            "position": {
+              "x": 950,
+              "y": 110
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Servicio de\nAutenticación"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 7,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "fcf5fcdd-fa63-5f04-8310-463a8944667e"
+                },
+                {
+                  "group": "right",
+                  "id": "78773714-b070-59ff-8e39-0ef3260e0ae8"
+                },
+                {
+                  "group": "bottom",
+                  "id": "9bfc035c-5160-5ae4-9ca8-4aa67bb179e4"
+                },
+                {
+                  "group": "left",
+                  "id": "c5330ef7-93a7-5315-9828-78b0f1da0f2a"
+                }
+              ]
+            },
+            "id": "2393bd44-c11f-52f9-8b6a-045df5150f5a",
+            "data": {
+              "name": "Servicio de\nAutenticación",
+              "description": "Proveedor de identidad (OAuth 2.0 / OIDC): valida credenciales, OTP y emite tokens.",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T16 – Evasión o fuerza bruta del OTP",
+                  "type": "Spoofing",
+                  "description": "El atacante reutiliza un OTP, lo adivina por fuerza bruta o salta el paso de verificación.",
+                  "mitigation": "OTP de un solo uso, ligado a la operación, con expiración de 2–5 min y máximo 3–5 intentos; preferir push firmado o FIDO2.\n\nReferencia: NIST SP 800-63B",
+                  "modelType": "STRIDE",
+                  "id": "63e80344-fb9d-54e6-9574-187c96bcd897"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T17 – Recuperación de acceso débil",
+                  "type": "Elevation of privilege",
+                  "description": "El proceso de 'olvidé mi PIN' o cambio de teléfono permite tomar la cuenta con datos fáciles de obtener.",
+                  "mitigation": "Reverificación fuerte (documento + prueba de vida facial); periodo de enfriamiento para transferencias tras la recuperación; notificación por canales previos.\n\nReferencia: NIST SP 800-63A",
+                  "modelType": "STRIDE",
+                  "id": "39e1b4d0-0c0d-554d-a68d-e5360ea6088d"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Low",
+                  "title": "T18 – Enumeración de usuarios",
+                  "type": "Information disclosure",
+                  "description": "Respuestas o tiempos distintos para usuarios existentes y no existentes permiten armar listas de clientes.",
+                  "mitigation": "Respuestas y tiempos uniformes; rate limiting en login y recuperación.\n\nReferencia: OWASP ASVS V2",
+                  "modelType": "STRIDE",
+                  "id": "a438c3c7-d048-5d12-94b2-73543351f0c2"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Process",
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": ""
+            }
+          },
+          {
+            "position": {
+              "x": 950,
+              "y": 400
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Core\nBancario"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 8,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "cd3d04af-6193-5a00-a30a-1a20fde7a50c"
+                },
+                {
+                  "group": "right",
+                  "id": "a42b33a0-ff12-5778-96d8-6ce9141367e4"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c6a5038a-880a-5413-9c86-61d038292ae2"
+                },
+                {
+                  "group": "left",
+                  "id": "222088c0-3077-5409-a129-c2fb142d616a"
+                }
+              ]
+            },
+            "id": "23a9de4d-cade-556a-a725-ac0662d8f91b",
+            "data": {
+              "name": "Core\nBancario",
+              "description": "Sistema central: cuentas, saldos, débitos, créditos y transferencias.",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T23 – Manipulación del monto o cuenta destino",
+                  "type": "Tampering",
+                  "description": "El atacante altera el monto o la cuenta destino entre la confirmación del cliente y la ejecución.",
+                  "mitigation": "Validación en el servidor; firma de la transacción que incluye monto y destino (lo que ves es lo que firmas); OTP/confirmación ligada a esos datos.\n\nReferencia: PSD2 RTS Art. 5 (dynamic linking)",
+                  "modelType": "STRIDE",
+                  "id": "f1e74d2f-ed2b-58a7-a8e4-f779874a81ce"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T24 – Transacciones sin logs firmados",
+                  "type": "Repudiation",
+                  "description": "Sin registros íntegros no se puede probar quién hizo qué ni cuándo; el fraude interno o externo queda sin trazabilidad.",
+                  "mitigation": "Logs de auditoría append-only con hash encadenado o firma; sello de tiempo sincronizado (NTP); ID de correlación de extremo a extremo; envío a SIEM.\n\nReferencia: OWASP Top 10:2025 A09; PCI DSS 10",
+                  "modelType": "STRIDE",
+                  "id": "a76faa4b-5208-54f2-9c0b-134b646e9902"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T25 – Cuenta de servicio del API con privilegios excesivos",
+                  "type": "Elevation of privilege",
+                  "description": "Si se compromete el API Gateway, su cuenta en el Core permite operaciones administrativas (ajustes de saldo, altas de cuentas).",
+                  "mitigation": "Mínimo privilegio por operación; mTLS entre servicios; segmentación y enfoque zero trust; operaciones administrativas solo desde red de gestión.\n\nReferencia: NIST SP 800-207",
+                  "modelType": "STRIDE",
+                  "id": "7351a5dc-206b-561d-b3bc-9ec381d4ceea"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T26 – Saturación del Core Bancario",
+                  "type": "Denial of service",
+                  "description": "Picos de tráfico o consultas costosas agotan los recursos del core y afectan a todos los canales.",
+                  "mitigation": "Colas y límites por cliente; circuit breakers y timeouts; caché de consultas de saldo; plan de capacidad.\n\nReferencia: OWASP API Security Top 10 (API4)",
+                  "modelType": "STRIDE",
+                  "id": "a506202e-0f71-55f6-87b5-c37e8878fc56"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Process",
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": ""
+            }
+          },
+          {
+            "position": {
+              "x": 225,
+              "y": 420
+            },
+            "size": {
+              "width": 150,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "Almacén seguro\ndel dispositivo"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 9,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "e3cde692-e0e2-5fe3-9c70-4f7ee7f8cfbe"
+                },
+                {
+                  "group": "right",
+                  "id": "6b584baa-4a93-50af-a14b-6248e158304f"
+                },
+                {
+                  "group": "bottom",
+                  "id": "f44769f8-c311-5a8c-91a5-95b0f065a6bb"
+                },
+                {
+                  "group": "left",
+                  "id": "5fa11ad5-a84b-5eac-b3da-48782a8e3afe"
+                }
+              ]
+            },
+            "id": "e7017614-a2b6-5e70-ab52-f1408d8ff52e",
+            "data": {
+              "name": "Almacén seguro\ndel dispositivo",
+              "description": "Keystore (Android) / Keychain (iOS): tokens de sesión y claves del dispositivo.",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T07 – Extracción de tokens del almacenamiento local",
+                  "type": "Information disclosure",
+                  "description": "Tokens guardados en SharedPreferences, archivos o copias de seguridad son copiados por malware o por acceso físico.",
+                  "mitigation": "Guardar tokens solo en Keystore/Keychain con clave respaldada por hardware; excluir de backups; access token de vida corta y refresh token ligado al dispositivo (DPoP / mTLS).\n\nReferencia: MASVS-STORAGE; RFC 9449 (DPoP)",
+                  "modelType": "STRIDE",
+                  "id": "a619a928-a5d3-53fd-ab2b-d77c9bd916da"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T08 – Alteración de datos locales de configuración",
+                  "type": "Tampering",
+                  "description": "Se modifican valores locales (límites, banderas de funcionalidades, cuentas favoritas) para inducir errores o fraude.",
+                  "mitigation": "No confiar en datos locales para decisiones de seguridad; firmar la configuración remota y validarla en el servidor.\n\nReferencia: MASVS-CODE",
+                  "modelType": "STRIDE",
+                  "id": "89ab60bf-5a46-5bc9-b3d2-70dc70d01d16"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Store",
+              "isALog": false,
+              "storesCredentials": true,
+              "isEncrypted": true,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 1190,
+              "y": 110
+            },
+            "size": {
+              "width": 150,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "BD Clientes y\nCredenciales"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 10,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "8092b356-031f-5507-bd36-c5041886978b"
+                },
+                {
+                  "group": "right",
+                  "id": "0376a073-b824-5b1d-928f-24aaf1c01ba6"
+                },
+                {
+                  "group": "bottom",
+                  "id": "41abf203-e60a-53ae-a615-6e3cc6dcceb8"
+                },
+                {
+                  "group": "left",
+                  "id": "52b5e5bf-fe6c-5f7e-93bd-5aaba4ded7e4"
+                }
+              ]
+            },
+            "id": "ce28f681-c769-5cb9-a414-e5240a7f1221",
+            "data": {
+              "name": "BD Clientes y\nCredenciales",
+              "description": "Datos personales, hashes de PIN/contraseña, dispositivos vinculados.",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T21 – Filtración de la base de clientes y credenciales",
+                  "type": "Information disclosure",
+                  "description": "Una inyección SQL o un acceso indebido expone datos personales y hashes de PIN/contraseña.",
+                  "mitigation": "Consultas parametrizadas; hash Argon2id/bcrypt con sal; cifrado en reposo (TDE); cuentas de servicio con mínimo privilegio; segmentación de red.\n\nReferencia: OWASP Top 10:2025 A05; PCI DSS 8.3",
+                  "modelType": "STRIDE",
+                  "id": "f1ec504e-eb1c-5647-8a96-ffedf7d0581f"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T22 – Cambio indebido del teléfono o correo del cliente",
+                  "type": "Tampering",
+                  "description": "Un insider o un atacante interno cambia el número de contacto para recibir los OTP del cliente.",
+                  "mitigation": "Control dual (4 ojos) para cambios de datos de contacto; notificación al canal anterior; auditoría y gestión de accesos privilegiados (PAM).\n\nReferencia: ISO/IEC 27001 A.8.2",
+                  "modelType": "STRIDE",
+                  "id": "b0376bb7-6630-525f-bb49-eb555d725d79"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Store",
+              "isALog": false,
+              "storesCredentials": true,
+              "isEncrypted": true,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 1190,
+              "y": 420
+            },
+            "size": {
+              "width": 150,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "BD Cuentas y\nTransacciones"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 11,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "ee89acc7-8626-5756-bfb4-d26ead5125ad"
+                },
+                {
+                  "group": "right",
+                  "id": "b36857ad-6632-55ae-9e34-1e2b940f6895"
+                },
+                {
+                  "group": "bottom",
+                  "id": "61921e7e-2030-5eb8-b52d-3067b32c047d"
+                },
+                {
+                  "group": "left",
+                  "id": "bb2b7f5b-7e6b-553f-9425-d31db3f8da78"
+                }
+              ]
+            },
+            "id": "7e23e186-ba43-53d0-bd59-60dcf57228e4",
+            "data": {
+              "name": "BD Cuentas y\nTransacciones",
+              "description": "Saldos, movimientos e historial de transferencias.",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T27 – Doble gasto por condición de carrera",
+                  "type": "Tampering",
+                  "description": "Dos transferencias simultáneas debitan el mismo saldo o se alteran registros de movimientos.",
+                  "mitigation": "Transacciones ACID con bloqueo; claves de idempotencia; conciliación diaria automática.\n\nReferencia: CWE-362",
+                  "modelType": "STRIDE",
+                  "id": "10c463c8-95ee-570e-ae6a-b3e1463486ea"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T28 – Exposición de datos financieros en respaldos o ambientes de prueba",
+                  "type": "Information disclosure",
+                  "description": "Copias de seguridad sin cifrar o datos reales en desarrollo exponen saldos y movimientos.",
+                  "mitigation": "Cifrado de respaldos; enmascaramiento de datos en ambientes no productivos; control de acceso a respaldos.\n\nReferencia: PCI DSS 3.5",
+                  "modelType": "STRIDE",
+                  "id": "ddf5b0bd-9dd3-5464-92e2-bb7983b74b99"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Store",
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": true,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 1190,
+              "y": 265
+            },
+            "size": {
+              "width": 150,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "Logs de\nauditoría"
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 12,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "a6fc9c8a-987d-58b2-910b-38129694df5d"
+                },
+                {
+                  "group": "right",
+                  "id": "a6023966-eab6-5547-9cff-a4bee7dacb03"
+                },
+                {
+                  "group": "bottom",
+                  "id": "2cbf0219-5198-5ea0-b5f7-a5a060468b00"
+                },
+                {
+                  "group": "left",
+                  "id": "b0fc1a5a-d6bd-5a6f-b292-c6151f0233e9"
+                }
+              ]
+            },
+            "id": "bde092b9-8604-5199-afb3-4e7aae069431",
+            "data": {
+              "name": "Logs de\nauditoría",
+              "description": "Registro de eventos de seguridad y transacciones (SIEM).",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T29 – Borrado o alteración de logs",
+                  "type": "Tampering",
+                  "description": "Un atacante o insider elimina registros para ocultar un fraude.",
+                  "mitigation": "Almacenamiento WORM / inmutable; envío en tiempo real al SIEM; separación de funciones entre operadores y auditores.\n\nReferencia: PCI DSS 10.3",
+                  "modelType": "STRIDE",
+                  "id": "68ff7c4f-d6d5-51aa-8d04-c56abb7cc9c7"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T30 – Datos sensibles registrados en logs",
+                  "type": "Information disclosure",
+                  "description": "Tokens, PIN o números completos de tarjeta quedan escritos en texto plano en los logs.",
+                  "mitigation": "Enmascaramiento y lista de campos prohibidos; revisión automática de logs; acceso restringido.\n\nReferencia: OWASP Logging Cheat Sheet",
+                  "modelType": "STRIDE",
+                  "id": "eece4eb9-e34d-50c6-89e2-b8fb79d6554f"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Low",
+                  "title": "T31 – Pérdida de eventos por saturación de logs",
+                  "type": "Denial of service",
+                  "description": "Un atacante genera eventos masivos para llenar el almacenamiento y perder registros posteriores.",
+                  "mitigation": "Rotación y cuotas; alertas de capacidad; agregación y muestreo de eventos no críticos.\n\nReferencia: CWE-400",
+                  "modelType": "STRIDE",
+                  "id": "78c03ec0-72a3-5bbb-9b4b-e75d01c11618"
+                }
+              ],
+              "hasOpenThreats": true,
+              "type": "tm.Store",
+              "isALog": true,
+              "storesCredentials": false,
+              "isEncrypted": true,
+              "isSigned": true
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 13,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Credenciales /\nPIN / biometría",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Credenciales /\nPIN / biometría",
+              "description": "F01: Credenciales / PIN / biometría",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "UI local",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T35 – Captura del PIN mediante overlay o keylogger",
+                  "type": "Information disclosure",
+                  "description": "Malware con permisos de accesibilidad dibuja una pantalla falsa sobre la app o registra las pulsaciones y obtiene el PIN del cliente.",
+                  "mitigation": "Teclado propio de la app para el PIN; detección de overlays y de servicios de accesibilidad sospechosos; preferir biometría ligada al Keystore.\n\nReferencia: MASVS-PLATFORM; MASVS-AUTH",
+                  "modelType": "STRIDE",
+                  "id": "c1da7b4f-20ae-54fb-9527-22585df23c6c"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "492a1431-363c-59e6-9932-31eed9fc71ed",
+            "source": {
+              "cell": "246b8fd0-3edf-57a8-8766-9734ef51035e"
+            },
+            "target": {
+              "cell": "8097fcf5-1aa5-5da3-bb3d-8dbc1524a5fb"
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 14,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Guardar tokens",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Guardar tokens",
+              "description": "F02: Guardar tokens",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "API Keystore",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Low",
+                  "title": "T36 – Tokens expuestos antes de llegar al almacén seguro",
+                  "type": "Information disclosure",
+                  "description": "El token recibido queda en memoria, en logs de depuración o en variables compartidas antes de guardarse en el Keystore.",
+                  "mitigation": "Pasar el token directamente al Keystore/Keychain; borrar copias en memoria; compilar sin logs de depuración en producción.\n\nReferencia: MASVS-STORAGE",
+                  "modelType": "STRIDE",
+                  "id": "1a9d0ed0-1a48-5d5f-af42-2049dce411bf"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "b4f7ce52-b24d-5d44-8572-5cd9b9ea6d70",
+            "source": {
+              "cell": "8097fcf5-1aa5-5da3-bb3d-8dbc1524a5fb"
+            },
+            "target": {
+              "cell": "e7017614-a2b6-5e70-ab52-f1408d8ff52e"
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 15,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Login y operaciones\n(HTTPS + token)",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Login y operaciones\n(HTTPS + token)",
+              "description": "F03: Login y operaciones (HTTPS + token)",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "HTTPS / TLS 1.3",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T09 – Intercepción (MITM) de credenciales y tokens",
+                  "type": "Information disclosure",
+                  "description": "En una Wi-Fi pública o con una CA maliciosa instalada, el atacante intercepta el tráfico entre la app y la API.",
+                  "mitigation": "TLS 1.2+/1.3 obligatorio; certificate pinning; no confiar en CA instaladas por el usuario (Network Security Config / ATS).\n\nReferencia: MASVS-NETWORK",
+                  "modelType": "STRIDE",
+                  "id": "cdd6dce9-9496-540d-9369-9cdb6b23861a"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T10 – Repetición (replay) o alteración de solicitudes",
+                  "type": "Tampering",
+                  "description": "Una solicitud de transferencia capturada se reenvía varias veces o se modifica en tránsito.",
+                  "mitigation": "Firma de la solicitud con nonce y marca de tiempo; claves de idempotencia; rechazo de solicitudes duplicadas o expiradas.\n\nReferencia: OWASP ASVS V13",
+                  "modelType": "STRIDE",
+                  "id": "7558467e-9c34-5867-a11e-fdff67c7dd49"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "ae071b99-9e27-5f2d-a0b3-cf261b1045cc",
+            "source": {
+              "cell": "8097fcf5-1aa5-5da3-bb3d-8dbc1524a5fb"
+            },
+            "target": {
+              "cell": "769c9677-7038-57a4-a5ad-125d7642f00d"
+            },
+            "vertices": [
+              {
+                "x": 500,
+                "y": 200
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 16,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Tokens / saldo /\ncomprobante",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Tokens / saldo /\ncomprobante",
+              "description": "F04: Tokens / saldo / comprobante",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "HTTPS / TLS 1.3",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T11 – Tokens o datos expuestos en respuestas y URLs",
+                  "type": "Information disclosure",
+                  "description": "Tokens en parámetros de URL o respuestas con más datos de los necesarios quedan en logs de proxies o del dispositivo.",
+                  "mitigation": "Tokens solo en encabezados/cuerpo; respuestas con el mínimo de datos; cabeceras Cache-Control: no-store.\n\nReferencia: OWASP API Security Top 10 (API3)",
+                  "modelType": "STRIDE",
+                  "id": "e0a8b6c4-0648-59fd-8ec9-6bb24c5c7c3f"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "8761df61-7009-501b-99e5-977ea86503e1",
+            "source": {
+              "cell": "769c9677-7038-57a4-a5ad-125d7642f00d"
+            },
+            "target": {
+              "cell": "8097fcf5-1aa5-5da3-bb3d-8dbc1524a5fb"
+            },
+            "vertices": [
+              {
+                "x": 500,
+                "y": 290
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 17,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Validar credenciales\ny OTP",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Validar credenciales\ny OTP",
+              "description": "F05: Validar credenciales y OTP",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "HTTPS interno (mTLS)",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T37 – Saturación del servicio de autenticación",
+                  "type": "Denial of service",
+                  "description": "Picos de intentos de login reenviados por el API Gateway agotan el servicio de autenticación y bloquean el acceso de todos los clientes.",
+                  "mitigation": "Rate limiting antes del servicio de autenticación; colas y circuit breakers entre el gateway y el IdP; autoescalado.\n\nReferencia: OWASP API Security Top 10 (API4)",
+                  "modelType": "STRIDE",
+                  "id": "1adec933-e56b-52b3-ad36-a503c9081f1f"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "29142b15-b871-527f-abd3-9fc437bc8215",
+            "source": {
+              "cell": "769c9677-7038-57a4-a5ad-125d7642f00d"
+            },
+            "target": {
+              "cell": "2393bd44-c11f-52f9-8b6a-045df5150f5a"
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 18,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Consultar hash\ny dispositivo",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Consultar hash\ny dispositivo",
+              "description": "F06: Consultar hash y dispositivo",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "SQL / TLS",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T38 – Inyección SQL en la consulta de credenciales",
+                  "type": "Tampering",
+                  "description": "Un parámetro de login no validado altera la consulta a la BD de clientes y permite iniciar sesión sin conocer el PIN.",
+                  "mitigation": "Consultas parametrizadas u ORM; validación de entrada; cuenta de BD de solo lectura para el servicio de autenticación.\n\nReferencia: OWASP Top 10:2025 A05; CWE-89",
+                  "modelType": "STRIDE",
+                  "id": "77bf818c-2608-540f-b80b-0fae1d772506"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "e916895b-9982-53b4-aee1-ba12b6e0d128",
+            "source": {
+              "cell": "2393bd44-c11f-52f9-8b6a-045df5150f5a"
+            },
+            "target": {
+              "cell": "ce28f681-c769-5cb9-a414-e5240a7f1221"
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 19,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Solicitud de OTP",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Solicitud de OTP",
+              "description": "F07: Solicitud de OTP",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "API REST / HTTPS",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T39 – Exposición de datos del cliente al proveedor de SMS",
+                  "type": "Information disclosure",
+                  "description": "El número de teléfono, el OTP y el texto del mensaje quedan almacenados en los sistemas y logs de un tercero.",
+                  "mitigation": "Enviar solo los datos mínimos; OTP de un solo uso y vida corta; acuerdo de tratamiento de datos y evaluación de seguridad del proveedor.\n\nReferencia: ISO/IEC 27001 A.5.19",
+                  "modelType": "STRIDE",
+                  "id": "df04de77-598f-57bf-9990-a2b55f8fa1cd"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "5130cade-0bc6-5285-8557-46770f57e553",
+            "source": {
+              "cell": "2393bd44-c11f-52f9-8b6a-045df5150f5a"
+            },
+            "target": {
+              "cell": "b7574bf6-1e40-5ade-b65b-675bb26e1c45"
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 20,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "OTP por SMS / Push",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "OTP por SMS / Push",
+              "description": "F08: OTP por SMS / Push",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": true,
+              "protocol": "SMS (GSM) / APNs-FCM",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T19 – Intercepción del OTP enviado por SMS",
+                  "type": "Information disclosure",
+                  "description": "El SMS puede ser leído por malware, interceptado vía SS7 o desviado por SIM swapping.",
+                  "mitigation": "Reemplazar SMS por notificación push autenticada o autenticador en la app; si se usa SMS, incluir monto y destino en el mensaje y no permitir su lectura por otras apps.\n\nReferencia: NIST SP 800-63B §5.1.3.3",
+                  "modelType": "STRIDE",
+                  "id": "20839883-b786-55fd-8d45-5029d5e323d3"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "acbd951d-839c-519c-b1dc-849f0d3f034f",
+            "source": {
+              "cell": "b7574bf6-1e40-5ade-b65b-675bb26e1c45"
+            },
+            "target": {
+              "cell": "246b8fd0-3edf-57a8-8766-9734ef51035e"
+            },
+            "vertices": [
+              {
+                "x": 130,
+                "y": 90
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 21,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Operación autorizada\n(saldo / transferencia)",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Operación autorizada\n(saldo / transferencia)",
+              "description": "F09: Operación autorizada (saldo / transferencia)",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "HTTPS interno (mTLS)",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T32 – Tráfico interno sin cifrar",
+                  "type": "Information disclosure",
+                  "description": "Dentro de la red del banco el tráfico entre API y Core puede ser capturado por un atacante que ya está dentro.",
+                  "mitigation": "mTLS en todo tráfico interno; segmentación de red.\n\nReferencia: NIST SP 800-207",
+                  "modelType": "STRIDE",
+                  "id": "1d483037-42a9-503e-b40e-8e452e9cadd8"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "076bd380-3ddc-5236-99fd-36e777562a5a",
+            "source": {
+              "cell": "769c9677-7038-57a4-a5ad-125d7642f00d"
+            },
+            "target": {
+              "cell": "23a9de4d-cade-556a-a725-ac0662d8f91b"
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 22,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Leer / escribir\nmovimientos",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Leer / escribir\nmovimientos",
+              "description": "F10: Leer / escribir movimientos",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "SQL / TLS",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Low",
+                  "title": "T40 – Bloqueos en la base de datos por transacciones concurrentes",
+                  "type": "Denial of service",
+                  "description": "Transacciones largas o bloqueos mutuos (deadlocks) en la BD de cuentas dejan sin servicio las transferencias y las consultas de saldo.",
+                  "mitigation": "Transacciones cortas con orden de bloqueo consistente; timeouts; réplicas de lectura para consultas de saldo.\n\nReferencia: CWE-833",
+                  "modelType": "STRIDE",
+                  "id": "d607b60d-dd63-53fb-bc7a-55a08e3a3925"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "b61dae5d-cd04-5cc0-92cf-ca61599fd15f",
+            "source": {
+              "cell": "23a9de4d-cade-556a-a725-ac0662d8f91b"
+            },
+            "target": {
+              "cell": "7e23e186-ba43-53d0-bd59-60dcf57228e4"
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 23,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Transferencia\ninterbancaria",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Transferencia\ninterbancaria",
+              "description": "F11: Transferencia interbancaria",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "ISO 20022 / VPN",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T33 – Mensajes interbancarios falsificados",
+                  "type": "Spoofing",
+                  "description": "Se inyectan o alteran órdenes de transferencia hacia la red interbancaria.",
+                  "mitigation": "Canal dedicado con mTLS/VPN; firma de mensajes según el estándar de la cámara (ISO 20022); conciliación.\n\nReferencia: ISO 20022; SWIFT CSP",
+                  "modelType": "STRIDE",
+                  "id": "593477f5-06d9-5aa9-8ec7-12d54e06943b"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "28dc5c16-2755-5168-af85-c37f2f081fa5",
+            "source": {
+              "cell": "23a9de4d-cade-556a-a725-ac0662d8f91b"
+            },
+            "target": {
+              "cell": "1ffd85bf-17c5-5c83-9da2-411989aa1548"
+            },
+            "vertices": [
+              {
+                "x": 1150,
+                "y": 640
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 24,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "Eventos de\nauditoría",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Eventos de\nauditoría",
+              "description": "F12: Eventos de auditoría",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "Syslog / TLS",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T41 – Eventos de auditoría alterados o suprimidos en tránsito",
+                  "type": "Tampering",
+                  "description": "Un atacante en la red interna modifica o descarta eventos de auditoría antes de que lleguen al almacén de logs.",
+                  "mitigation": "TLS en el envío de eventos; firma de cada evento en origen; número de secuencia para detectar eventos faltantes.\n\nReferencia: OWASP Logging Cheat Sheet; PCI DSS 10.3",
+                  "modelType": "STRIDE",
+                  "id": "7dcefe14-2da0-5e46-8b8a-359a6c9c905b"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "633bc247-55b0-5e1a-9472-6e05cacc384c",
+            "source": {
+              "cell": "23a9de4d-cade-556a-a725-ac0662d8f91b"
+            },
+            "target": {
+              "cell": "bde092b9-8604-5199-afb3-4e7aae069431"
+            },
+            "vertices": [
+              {
+                "x": 1110,
+                "y": 330
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "diagramTop": 1,
+    "reviewer": "MSc. José Pablo Villazón Valdez",
+    "threatTop": 41
+  }
+}
