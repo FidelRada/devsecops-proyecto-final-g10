@@ -94,7 +94,23 @@ class GateTest(unittest.TestCase):
         self.assertEqual(self.ejecutar(), 1)
         self.assertEqual(self.gate_json()["decision"], "bloqueado")
 
+    def test_semgrep_critical_o_high_bloquea(self):
+        for severidad in ("CRITICAL", "HIGH"):
+            with self.subTest(severidad=severidad):
+                self.preparar()
+                datos = json.loads((DATOS / "semgrep_bloqueante.json").read_text(encoding="utf-8"))
+                datos["results"][0]["extra"]["severity"] = severidad
+                (self.reports / "semgrep.json").write_text(json.dumps(datos), encoding="utf-8")
+                self.assertEqual(self.ejecutar(), 1)
+
     # --- código 2 (fail-closed) ----------------------------------------------
+
+    def test_trivy_sin_results_es_fail_closed(self):
+        for contenido in ({"SchemaVersion": 2}, {"SchemaVersion": 2, "Results": []}):
+            with self.subTest(contenido=contenido):
+                self.preparar()
+                (self.reports / "trivy-sca.json").write_text(json.dumps(contenido), encoding="utf-8")
+                self.assertEqual(self.ejecutar(), 2)
 
     def test_reporte_faltante(self):
         for nombre in LIMPIOS:

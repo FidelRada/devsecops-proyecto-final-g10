@@ -28,6 +28,7 @@ class ServidorFalso:
         self.peticiones = []
         self.fallos_red = 0  # respuestas 503 antes de responder bien
         self.codigo_reimport = 201
+        self.sin_test_id = False
         servidor = self
 
         class Manejador(BaseHTTPRequestHandler):
@@ -69,6 +70,9 @@ class ServidorFalso:
                         return
                     if servidor.codigo_reimport >= 400:
                         self._responder(servidor.codigo_reimport, {"detail": "scan_type inválido"})
+                        return
+                    if servidor.sin_test_id:
+                        self._responder(201, {"engagement_id": 7})
                         return
                     n = sum(1 for p in servidor.peticiones if p["ruta"] == "/api/v2/reimport-scan/")
                     self._responder(201, {"test_id": 100 + n, "engagement_id": 7, "product_id": 3, "statistics": {"after": {}}})
@@ -196,6 +200,12 @@ class ImportadorTest(unittest.TestCase):
         self.assertEqual(rc, 1)
         self.assertIn("HTTP 400", salida)
         self.assertEqual(len(self.reimports()), 1)  # sin reintentos ante un 4xx
+
+    def test_respuesta_sin_test_id(self):
+        self.servidor.sin_test_id = True
+        rc, salida = self.ejecutar("pipeline", "--reports", str(self.reports))
+        self.assertEqual(rc, 1)
+        self.assertIn("id del Test", salida)
 
     def test_reporte_faltante(self):
         (self.reports / "trivy-image.json").unlink()

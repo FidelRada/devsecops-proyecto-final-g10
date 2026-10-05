@@ -6,7 +6,7 @@ de salida de los escáneres. Es fail-closed: si un reporte requerido falta, est�
 o no se puede interpretar, el gate falla.
 
 Bloquean (código 1):
-  - Semgrep:          resultados con extra.severity == ERROR.
+  - Semgrep:          resultados con extra.severity ERROR (o CRITICAL/HIGH).
   - Trivy (SCA/imagen): vulnerabilidades HIGH o CRITICAL con FixedVersion (hay corrección).
   - Conftest:         cualquier entrada en "failures" (reglas deny).
 Se informan sin bloquear: Semgrep WARNING/INFO, Trivy HIGH/CRITICAL sin corrección,
@@ -34,6 +34,9 @@ EXIT_BLOQUEADO = 1
 EXIT_FAIL_CLOSED = 2
 
 SEVERIDADES_TRIVY_BLOQUEANTES = {"HIGH", "CRITICAL"}
+# ERROR es la severidad máxima de las reglas actuales; CRITICAL y HIGH son las de las
+# reglas con el esquema de severidades nuevo de Semgrep.
+SEVERIDADES_SEMGREP_BLOQUEANTES = {"ERROR", "CRITICAL", "HIGH"}
 
 # Reporte -> herramienta, en el orden en que se presentan.
 REPORTES = {
@@ -115,7 +118,7 @@ def evaluar_semgrep(datos, herramienta: str) -> list:
                 regla=str(r.get("check_id", "?")),
                 severidad=severidad,
                 ubicacion=f"{r.get('path', '?')}:{linea}" if linea else str(r.get("path", "?")),
-                bloquea=severidad == "ERROR",
+                bloquea=severidad in SEVERIDADES_SEMGREP_BLOQUEANTES,
             )
         )
     return hallazgos
@@ -125,8 +128,10 @@ def evaluar_trivy(datos, herramienta: str) -> list:
     if not isinstance(datos, dict) or "SchemaVersion" not in datos:
         raise ReporteInvalido("no es un reporte de Trivy (falta 'SchemaVersion')")
     resultados = datos.get("Results")
-    if resultados is not None and not isinstance(resultados, list):
-        raise ReporteInvalido("'Results' debe ser una lista")
+    if not isinstance(resultados, list) or not resultados:
+        # Trivy incluye en Results los paquetes analizados aunque no tengan vulnerabilidades:
+        # una lista vacía o ausente indica que no se analizó nada (p. ej., un SBOM vacío).
+        raise ReporteInvalido("'Results' vacío o ausente: no se analizó ningún paquete")
     hallazgos = []
     for res in resultados or []:
         objetivo = res.get("Target", "?")
@@ -177,6 +182,8 @@ def evaluar(carpeta: Path) -> Resultado:
             resultado.hallazgos.extend(EVALUADORES[archivo](datos, herramienta))
         except ReporteInvalido as exc:
             resultado.errores.append((archivo, str(exc)))
+        except (AttributeError, TypeError, KeyError, ValueError) as exc:
+            resultado.errores.append((archivo, f"estructura inesperada: {type(exc).__name__}"))
     return resultado
 
 
@@ -206,7 +213,7 @@ def a_json(resultado: Resultado) -> dict:
         "decision": resultado.decision(),
         "codigo_salida": resultado.codigo(),
         "criterios": {
-            "semgrep": "extra.severity == ERROR",
+            "semgrep": "extra.severity ERROR, CRITICAL o HIGH",
             "trivy": "Severity HIGH o CRITICAL con FixedVersion",
             "conftest": "failures no vacío",
         },
@@ -223,7 +230,7 @@ def a_markdown(resultado: Resultado, max_filas: int = 100) -> str:
         "",
         f"**Decisión: {icono} {resultado.decision()}** (código de salida {resultado.codigo()})",
         "",
-        "Bloquean: Semgrep `ERROR`; Trivy `HIGH`/`CRITICAL` con versión corregida; Conftest `failures`.",
+        "Bloquean: Semgrep `ERROR` (o `CRITICAL`/`HIGH`); Trivy `HIGH`/`CRITICAL` con versión corregida; Conftest `failures`.",
         "",
         "| Herramienta | Bloqueantes | No bloqueantes | Por severidad |",
         "|---|---:|---:|---|",
