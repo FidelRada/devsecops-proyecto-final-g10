@@ -1,0 +1,17 @@
+{
+  "version": "1.179.0",
+  "errors": [],
+  "results": [
+    {
+      "check_id": "regla::error::x",
+      "path": "a|b\n::warning::inyectado",
+      "start": {
+        "line": 1
+      },
+      "extra": {
+        "severity": "ERROR",
+        "message": "x"
+      }
+    }
+  ]
+}

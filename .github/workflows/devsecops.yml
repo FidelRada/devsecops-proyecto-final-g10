@@ -1,0 +1,245 @@
+# Pipeline DevSecOps del Grupo 10.
+#
+# Job "ci" (GitHub, ubuntu-latest): compila y prueba, ejecuta cada análisis como un
+# step propio (SAST, SCA, Image Checker y Policy as Code), publica los reportes JSON
+# y decide con el quality gate.
+# Job "defectdojo" (runner local): importa los reportes en DefectDojo, también cuando
+# el gate falla, para gestionar los hallazgos de cada versión.
+# Job "cd-local" (runner local): despliega en la PC con Docker Compose solo si el gate
+# aprobó y la importación terminó bien.
+#
+# Los jobs locales nunca corren en pull requests: además de la condición "if", el
+# repositorio exige aprobación para los workflows de forks y el secreto de DefectDojo
+# vive solo en el entorno "cd-local", restringido a la rama main.
+
+name: DevSecOps CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: devsecops-${{ github.ref }}
+  # En un PR se cancela el run anterior; en main nunca se corta una importación o un despliegue a medias.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  SEMGREP_IMAGE: semgrep/semgrep:1.179.0@sha256:93963d9295a366f59e4850127b1550400ee7b388f04fe144e4a1f6325d96e01b
+  TRIVY_IMAGE: aquasec/trivy:0.74.0@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969
+  CONFTEST_IMAGE: openpolicyagent/conftest:v0.71.0@sha256:3ec6dad358db08acecda56b7a3184037cd810394a65046fafa4f33c7750141b1
+  IMAGEN_APP: g10-webapi
+
+jobs:
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Compilar y probar
+        run: |
+          mkdir -p reports
+          mvn -B clean verify
+
+      - name: Pruebas de scripts
+        run: python3 -m unittest discover -s tests -v
+
+      - name: SAST - Semgrep
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp \
+            -v "$PWD:/src" -w /src "$SEMGREP_IMAGE" \
+            semgrep scan --metrics=off \
+              --config p/java --config p/owasp-top-ten --config .semgrep.yml \
+              --json --output reports/semgrep.json src/main/java
+
+      - name: SCA - SBOM CycloneDX
+        run: |
+          mvn -B -DskipTests org.cyclonedx:cyclonedx-maven-plugin:2.9.3:makeAggregateBom
+          cp target/bom.json reports/bom.json
+
+      - name: SCA - Trivy SBOM
+        run: |
+          docker run --rm -v "$PWD:/w" -v trivy-cache:/root/.cache/ -w /w "$TRIVY_IMAGE" \
+            sbom --format json --output reports/trivy-sca.json reports/bom.json
+
+      - name: Construir imagen
+        run: docker build -t "$IMAGEN_APP:$GITHUB_SHA" .
+
+      - name: Image Checker - Trivy
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+            -v "$PWD:/w" -v trivy-cache:/root/.cache/ -w /w "$TRIVY_IMAGE" \
+            image --image-src docker --format json --output reports/trivy-image.json "$IMAGEN_APP:$GITHUB_SHA"
+
+      - name: PaC - Conftest (pruebas de la política)
+        run: docker run --rm -v "$PWD:/project" -w /project "$CONFTEST_IMAGE" verify --policy policy
+
+      - name: PaC - Conftest (Dockerfile)
+        run: |
+          # Conftest devuelve 1 con violaciones y también ante errores de Rego: se guarda
+          # el código y el validador distingue un resultado válido de un error técnico.
+          rc=0
+          docker run --rm -v "$PWD:/project" -w /project "$CONFTEST_IMAGE" \
+            test Dockerfile --parser dockerfile --policy policy --output json \
+            > reports/conftest.json 2> conftest.err || rc=$?
+          python3 scripts/validar_conftest.py reports/conftest.json conftest.err "$rc"
+
+      - name: Publicar reportes
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: reportes-devsecops
+          path: reports/*.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Quality gate
+        id: gate
+        run: python3 scripts/gate.py --reports reports --output reports/gate.json
+
+      - name: Publicar resultado del gate
+        if: ${{ !cancelled() && steps.gate.outcome != 'skipped' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: gate
+          path: reports/gate.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Exportar imagen aprobada
+        run: docker save "$IMAGEN_APP:$GITHUB_SHA" | gzip > imagen-webapi.tar.gz
+
+      - name: Publicar imagen aprobada
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: imagen-webapi
+          path: imagen-webapi.tar.gz
+          if-no-files-found: error
+          retention-days: 1
+
+  defectdojo:
+    name: defectdojo
+    needs: ci
+    # Corre aunque el gate falle: la línea base también se registra en DefectDojo.
+    if: ${{ !cancelled() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'FidelRada/devsecops-proyecto-final-g10' }}
+    runs-on: [self-hosted, linux, g10-local]
+    environment: cd-local
+    concurrency:
+      group: cd-local
+      cancel-in-progress: false
+    timeout-minutes: 20
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Descargar reportes
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: reportes-devsecops
+          path: reports
+
+      - name: Importar en DefectDojo
+        env:
+          DEFECTDOJO_URL: ${{ vars.DEFECTDOJO_URL || 'http://127.0.0.1:8080' }}
+          DEFECTDOJO_API_KEY: ${{ secrets.DEFECTDOJO_API_KEY }}
+        run: python3 scripts/importar_defectdojo.py pipeline --reports reports
+
+      - name: Publicar resultado de la importación
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: defectdojo
+          path: reports/defectdojo-*.json
+          if-no-files-found: error
+          retention-days: 30
+
+  cd-local:
+    name: cd-local
+    needs: [ci, defectdojo]
+    # Solo se despliega una versión aprobada por el gate y registrada en DefectDojo.
+    if: ${{ !cancelled() && needs.ci.result == 'success' && needs.defectdojo.result == 'success' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'FidelRada/devsecops-proyecto-final-g10' }}
+    runs-on: [self-hosted, linux, g10-local]
+    environment: cd-local
+    concurrency:
+      group: cd-local
+      cancel-in-progress: false
+    timeout-minutes: 15
+    steps:
+      - name: Obtener código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Descargar imagen aprobada
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: imagen-webapi
+          path: imagen
+
+      - name: Descargar reportes
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: reportes-devsecops
+          path: reports
+
+      - name: Cargar imagen y comprobar que es la escaneada
+        run: |
+          gunzip -c imagen/imagen-webapi.tar.gz | docker load
+          cargada=$(docker image inspect "$IMAGEN_APP:$GITHUB_SHA" --format '{{.Id}}')
+          escaneada=$(python3 -c 'import json; print(json.load(open("reports/trivy-image.json"))["Metadata"]["ImageID"])')
+          echo "Imagen cargada:   $cargada"
+          echo "Imagen escaneada: $escaneada"
+          if [ "$cargada" != "$escaneada" ]; then
+            echo "::error::La imagen a desplegar no es la que escaneó Trivy"
+            exit 1
+          fi
+
+      - name: Desplegar con Docker Compose
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: docker compose -f deploy/compose.yml -p g10-webapi up -d --wait --wait-timeout 120
+
+      - name: Smoke test
+        run: |
+          # Única petición a la aplicación: el endpoint de salud (no es un análisis dinámico).
+          respuesta=$(curl -fsS --retry 10 --retry-delay 5 --retry-all-errors http://127.0.0.1:8085/actuator/health)
+          echo "$respuesta"
+          echo "$respuesta" | grep -q '"status":"UP"'
+          {
+            echo "## Despliegue local"
+            echo ""
+            echo "- Imagen: \`$IMAGEN_APP:$GITHUB_SHA\`"
+            echo "- URL: http://127.0.0.1:8085"
+            echo "- /actuator/health: \`$respuesta\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Limpiar imágenes antiguas
+        run: |
+          # Conserva las dos imágenes más recientes de la aplicación y no toca las que usa un contenedor.
+          docker image ls "$IMAGEN_APP" --format '{{.CreatedAt}}|{{.Tag}}' | sort -r | tail -n +3 | cut -d'|' -f2 |
+            while read -r etiqueta; do
+              if [ -z "$(docker ps -aq --filter "ancestor=$IMAGEN_APP:$etiqueta")" ]; then
+                docker image rm "$IMAGEN_APP:$etiqueta"
+              fi
+            done

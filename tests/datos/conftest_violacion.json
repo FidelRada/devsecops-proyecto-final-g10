@@ -1,0 +1,23 @@
+[
+  {
+    "filename": "Dockerfile",
+    "namespace": "main",
+    "successes": 7,
+    "failures": [
+      {
+        "msg": "La imagen final no está fijada por digest",
+        "metadata": {
+          "query": "data.main.deny"
+        }
+      }
+    ],
+    "warnings": [
+      {
+        "msg": "COPY sin --chown",
+        "metadata": {
+          "query": "data.main.warn"
+        }
+      }
+    ]
+  }
+]

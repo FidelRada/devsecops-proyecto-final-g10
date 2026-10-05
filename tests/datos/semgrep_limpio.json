@@ -1,0 +1,17 @@
+{
+  "version": "1.179.0",
+  "errors": [],
+  "results": [
+    {
+      "check_id": "lab-csrf-disabled",
+      "path": "src/main/java/A.java",
+      "start": {
+        "line": 10
+      },
+      "extra": {
+        "severity": "WARNING",
+        "message": "x"
+      }
+    }
+  ]
+}

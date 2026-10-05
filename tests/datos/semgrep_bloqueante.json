@@ -1,0 +1,17 @@
+{
+  "version": "1.179.0",
+  "errors": [],
+  "results": [
+    {
+      "check_id": "lab-java-sql-concatenation",
+      "path": "src/main/java/ProductController.java",
+      "start": {
+        "line": 24
+      },
+      "extra": {
+        "severity": "ERROR",
+        "message": "SQL"
+      }
+    }
+  ]
+}

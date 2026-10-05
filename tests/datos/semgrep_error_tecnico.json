@@ -1,0 +1,11 @@
+{
+  "version": "1.179.0",
+  "errors": [
+    {
+      "level": "error",
+      "type": "InvalidRuleSchemaError",
+      "message": "regla inválida"
+    }
+  ],
+  "results": []
+}

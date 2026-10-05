@@ -3,3 +3,8 @@ target/
 *.iml
 .vscode/
 *.log
+reports/
+conftest.err
+imagen-webapi.tar.gz
+__pycache__/
+*.pyc

@@ -1,0 +1,18 @@
+{
+  "SchemaVersion": 2,
+  "ArtifactType": "cyclonedx",
+  "Results": [
+    {
+      "Target": "Java",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2022-42889",
+          "PkgName": "org.apache.commons:commons-text",
+          "InstalledVersion": "1.9",
+          "FixedVersion": "1.10.0",
+          "Severity": "CRITICAL"
+        }
+      ]
+    }
+  ]
+}

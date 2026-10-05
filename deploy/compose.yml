@@ -1,0 +1,19 @@
+# Despliegue local de la API (job cd-local). Solo escucha en 127.0.0.1:8085.
+# IMAGE_TAG es el commit que aprobó el quality gate; APP_ENV_FILE (opcional) apunta a
+# un archivo con las variables de la aplicación que vive fuera del repositorio.
+services:
+  webapi:
+    image: g10-webapi:${IMAGE_TAG:?IMAGE_TAG requerido}
+    ports:
+      - "127.0.0.1:8085:8080"
+    env_file:
+      - path: ${APP_ENV_FILE:-/dev/null}
+        required: false
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - "no-new-privileges:true"
+    cap_drop:
+      - ALL
+    restart: unless-stopped

@@ -1,0 +1,4 @@
+self-hosted-runner:
+  # Label del runner local que ejecuta la importación en DefectDojo y el despliegue.
+  labels:
+    - g10-local

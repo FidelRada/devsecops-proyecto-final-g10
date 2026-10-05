@@ -1,0 +1,18 @@
+{
+  "SchemaVersion": 2,
+  "ArtifactType": "container_image",
+  "Results": [
+    {
+      "Target": "g10 (alpine 3.22)",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2099-0002",
+          "PkgName": "libx",
+          "InstalledVersion": "2.0",
+          "FixedVersion": "",
+          "Severity": "HIGH"
+        }
+      ]
+    }
+  ]
+}
