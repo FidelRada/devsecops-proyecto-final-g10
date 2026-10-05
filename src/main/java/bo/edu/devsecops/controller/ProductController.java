@@ -13,6 +13,9 @@ import java.util.Map;
 @RequestMapping("/api/products")
 public class ProductController {
 
+    /** Consulta fija: el texto del usuario viaja solo como parámetro enlazado, nunca dentro del SQL. */
+    private static final String CONSULTA = "SELECT id, name, price FROM products WHERE name LIKE ?";
+
     private final JdbcTemplate jdbcTemplate;
 
     public ProductController(JdbcTemplate jdbcTemplate) {
@@ -21,7 +24,6 @@ public class ProductController {
 
     @GetMapping("/search")
     public List<Map<String, Object>> search(@RequestParam(defaultValue = "") String name) {
-        String sql = "SELECT id, name, price FROM products WHERE name LIKE '%" + name + "%'";
-        return jdbcTemplate.queryForList(sql);
+        return jdbcTemplate.queryForList(CONSULTA, "%" + name + "%");
     }
 }

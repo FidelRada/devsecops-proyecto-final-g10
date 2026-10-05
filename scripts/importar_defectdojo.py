@@ -103,7 +103,10 @@ class Reporte:
     def validar(self) -> None:
         if not self.ruta.is_file():
             raise ErrorEntrada(f"reporte faltante: {self.ruta}")
-        texto = self.ruta.read_text(encoding="utf-8")
+        try:
+            texto = self.ruta.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            raise ErrorEntrada(f"no se pudo leer {self.ruta}: {exc}") from exc
         if not texto.strip():
             raise ErrorEntrada(f"reporte vacío: {self.ruta}")
         try:
@@ -162,7 +165,10 @@ class ClienteDefectDojo:
             try:
                 with urllib.request.urlopen(pedido, timeout=TIMEOUT) as resp:
                     texto = resp.read().decode("utf-8", errors="replace")
-                    return json.loads(texto) if texto.strip() else {}
+                    try:
+                        return json.loads(texto) if texto.strip() else {}
+                    except json.JSONDecodeError:
+                        raise ErrorApi(f"{metodo} {ruta} -> respuesta no JSON (¿DEFECTDOJO_URL correcta?)") from None
             except urllib.error.HTTPError as exc:
                 detalle = exc.read().decode("utf-8", errors="replace")[:500]
                 if exc.code >= 500 and intento < INTENTOS:
@@ -267,6 +273,8 @@ class Importador:
         for reporte in self.reportes:
             respuesta = self.cliente.reimportar(reporte)
             test_id = respuesta.get("test_id") or respuesta.get("test")
+            if not test_id:
+                raise ErrorApi(f"reimport-scan de {reporte.test_title} no devolvió el id del Test")
             self.engagement_id = respuesta.get("engagement_id") or self.engagement_id
             conteo = self.cliente.contar_hallazgos(test_id) if test_id else {}
             self.resultados.append(

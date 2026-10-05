@@ -80,7 +80,7 @@ jobs:
 
       - name: SCA - Trivy SBOM
         run: |
-          docker run --rm -v "$PWD:/w" -v trivy-cache:/root/.cache/ -w /w "$TRIVY_IMAGE" \
+          docker run --rm -v "$PWD:/w" -v trivy-cache:/root/.cache/trivy -w /w "$TRIVY_IMAGE" \
             sbom --format json --output reports/trivy-sca.json reports/bom.json
 
       - name: Construir imagen
@@ -89,7 +89,7 @@ jobs:
       - name: Image Checker - Trivy
         run: |
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-            -v "$PWD:/w" -v trivy-cache:/root/.cache/ -w /w "$TRIVY_IMAGE" \
+            -v "$PWD:/w" -v trivy-cache:/root/.cache/trivy -w /w "$TRIVY_IMAGE" \
             image --image-src docker --format json --output reports/trivy-image.json "$IMAGEN_APP:$GITHUB_SHA"
 
       - name: PaC - Conftest (pruebas de la política)
