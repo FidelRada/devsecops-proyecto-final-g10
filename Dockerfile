@@ -1,24 +1,22 @@
 # ---- Build stage ----
-FROM eclipse-temurin:21-jdk-alpine AS builder
+FROM maven:3.9.16-eclipse-temurin-21-alpine AS builder
 WORKDIR /app
 
-# Copy Maven wrapper & pom first (better layer caching)
-COPY mvnw .
-COPY .mvn .mvn
+# Copy pom first (better layer caching)
 COPY pom.xml .
 
 # Download dependencies (cached unless pom changes)
-RUN ./mvnw dependency:go-offline -B
+RUN mvn dependency:go-offline -B
 
 # Copy source and build
 COPY src src
-RUN ./mvnw package -DskipTests -B
+RUN mvn package -DskipTests -B
 
 # ---- Runtime stage ----
 FROM eclipse-temurin:21-jdk-alpine
 
 # Security: run as non-root user
-RUN groupadd -r spring && useradd -r -g spring spring
+RUN addgroup -S spring && adduser -S -G spring spring
 USER spring:spring
 
 WORKDIR /app
