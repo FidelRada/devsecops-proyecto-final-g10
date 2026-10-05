@@ -55,8 +55,8 @@ En los pull requests solo corre `ci`: los jobs locales aparecen como *skipped*. 
 
 [`scripts/gate.py`](scripts/gate.py) lee los cuatro reportes y termina con:
 
-- **1 (bloqueado)** si hay un resultado de Semgrep `ERROR`, una vulnerabilidad de Trivy `HIGH`/`CRITICAL` **con versión corregida**, o una violación `deny` de Conftest;
-- **2 (fail-closed)** si un reporte falta, está vacío, no es JSON o Semgrep informó errores técnicos;
+- **1 (bloqueado)** si hay un resultado de Semgrep `ERROR` (o `CRITICAL`/`HIGH`), una vulnerabilidad de Trivy `HIGH`/`CRITICAL` **con versión corregida**, o una violación `deny` de Conftest;
+- **2 (fail-closed)** si un reporte falta, está vacío, no es JSON, tiene una estructura inesperada, Trivy no analizó ningún paquete (`Results` vacío) o Semgrep informó errores técnicos;
 - **0 (aprobado)** en otro caso. Los `WARNING`, las vulnerabilidades sin corrección y los avisos `warn` se informan, pero no bloquean.
 
 El resultado queda en `gate.json` y en el resumen del run. Conftest devuelve 1 tanto con violaciones como ante un error de sintaxis Rego, así que [`scripts/validar_conftest.py`](scripts/validar_conftest.py) revisa el código, stderr y la estructura del JSON antes de que decida el gate.
@@ -143,7 +143,7 @@ SCA se importa antes que la imagen: DefectDojo marca como *Duplicate* en el Test
 
 ## Runner self-hosted (CD local)
 
-Los jobs `defectdojo` y `cd-local` corren en la PC del grupo con un runner de GitHub Actions sin privilegios:
+Los jobs `defectdojo` y `cd-local` corren en la PC del grupo con un runner de GitHub Actions instalado con el usuario normal (sin `sudo` ni servicio del sistema):
 
 ```bash
 mkdir runner && cd runner
@@ -160,7 +160,10 @@ Seguridad del runner (el repositorio es público):
 - el repositorio exige aprobación para los workflows de **todos** los colaboradores externos y nunca se aprueba un run de un fork;
 - el secreto `DEFECTDOJO_API_KEY` existe solo en el entorno `cd-local`, que únicamente acepta la rama `main`;
 - `./run.sh` se lanza solo durante la ejecución del pipeline (no como servicio);
-- el `GITHUB_TOKEN` es de solo lectura y DefectDojo y la aplicación escuchan solo en `127.0.0.1`.
+- el `GITHUB_TOKEN` es de solo lectura y DefectDojo y la aplicación escuchan solo en `127.0.0.1`;
+- los archivos de registro del runner (`.credentials`, `.credentials_rsaparams`, `.runner`) tienen permisos 600.
+
+**Riesgo residual:** el usuario que ejecuta el runner pertenece al grupo `docker`, porque los jobs usan Docker. Eso equivale a tener privilegios de root en la PC: un workflow malicioso que llegara a ejecutarse en el runner podría tomar el control del equipo. Por eso los controles anteriores impiden que código de terceros llegue al runner (aprobación de forks, entorno restringido a `main`, protección de `main` con PR obligatorio y runner apagado fuera de las ejecuciones). Al terminar el proyecto, el runner se elimina con `./config.sh remove`.
 
 El secreto lo crea el dueño del repositorio, leyendo el valor desde `.env.local` sin mostrarlo:
 
